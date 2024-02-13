@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    platform: linux/amd64
+    # ローカルPCのディレクトリをコンテナ内のディレクトリとして提供
+    # tmp/mysqlディレクトリをコンテナ内の/var/lib/mysqlディレクトリとするように指定
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql
+    # コンテナに接続するときのポート番号
+    # ローカル側で接続時に使うポート番号:コンテナ側で受け入れるポート番号
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=batch
