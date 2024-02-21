@@ -1,8 +1,26 @@
 version: '3.8'
 services:
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/app
+    environment:
+      RAILS_ENV: development
+    command: >
+      bash -c "bundle install &&
+      rm -f tmp/pids/server.pid &&
+      bundle exec rails s -p 3001 -b '0.0.0.0'"
+    ports:
+      - 3001:3001
+    depends_on:
+      - mysql
+    tty: true
+    stdin_open: true
   mysql:
     image: mysql:8.0
     platform: linux/amd64
+    command: --default-authentication-plugin=mysql_native_password --port 3305
     # ローカルPCのディレクトリをコンテナ内のディレクトリとして提供
     # tmp/mysqlディレクトリをコンテナ内の/var/lib/mysqlディレクトリとするように指定
     volumes:
@@ -10,6 +28,6 @@ services:
     # コンテナに接続するときのポート番号
     # ローカル側で接続時に使うポート番号:コンテナ側で受け入れるポート番号
     ports:
-      - 3306:3306
+      - 3305:3305
     environment:
-      - MYSQL_ROOT_PASSWORD=batch
+      MYSQL_ROOT_PASSWORD: "batch"
