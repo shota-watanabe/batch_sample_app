@@ -1,6 +1,6 @@
 FROM ruby:3.2.2
 
-RUN apt-get update -qq && apt-get install -y nodejs build-essential default-mysql-client yarn vim
+RUN apt-get update -qq && apt-get install -y nodejs build-essential default-mysql-client yarn vim less
 
 ENV ROOT /app
 RUN mkdir ${ROOT}
