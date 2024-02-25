@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_15_002900) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_25_082820) do
   create_table "ranks", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "ゲーム内のランキング情報", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.integer "rank", default: 0, null: false, comment: "ユーザーの順位"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_15_002900) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["rank"], name: "index_ranks_on_rank"
+    t.index ["score"], name: "ranks_score_index"
     t.index ["user_id"], name: "index_ranks_on_user_id", unique: true
   end
 
