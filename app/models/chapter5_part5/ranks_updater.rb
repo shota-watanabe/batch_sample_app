@@ -7,6 +7,7 @@ module Chapter5Part5
         # ユーザーごとのスコア合計を降順に並べ替え、そこからランキング情報を再作成する
         Development::UsedMemoryReport.instance.write('after Rank.delete_all')
         create_ranks
+        Development::UsedMemoryReport.instance.write('after create_ranks')
       end
     end
 
@@ -16,6 +17,12 @@ module Chapter5Part5
         Rank.import users
                       .select { |user| user.total_score.nonzero? }
                       .map { |user| { user_id: user.id, score: user.total_score }  }
+      end
+    end
+
+    def update_ranks
+      RankOrderMaker.new.each_ranked_user do |score, rank|
+        Rank.where(score: score).update_all(rank: rank)
       end
     end
   end
