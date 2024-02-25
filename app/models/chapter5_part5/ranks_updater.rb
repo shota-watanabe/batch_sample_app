@@ -8,6 +8,8 @@ module Chapter5Part5
         Development::UsedMemoryReport.instance.write('after Rank.delete_all')
         create_ranks
         Development::UsedMemoryReport.instance.write('after create_ranks')
+        update_ranks
+        Development::UsedMemoryReport.instance.write('after update_ranks')
       end
     end
 
